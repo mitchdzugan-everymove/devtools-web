@@ -20,17 +20,17 @@ object SPAMain extends js.JSApp {
   // Define the locations (pages) used in this application
   sealed trait Loc
 
-  case object DashboardLoc extends Loc
+  case object HomeL extends Loc
 
-  case object TodoLoc extends Loc
+  case object DeverrorVisL extends Loc
 
   // configure the router
   val routerConfig = RouterConfigDsl[Loc].buildConfig { dsl =>
     import dsl._
 
-    (staticRoute(root, DashboardLoc) ~> renderR(ctl => Dashboard.component(ctl))
-      | staticRoute("#todo", TodoLoc) ~> renderR(ctl => Todo(TodoStore)(ctl))
-      ).notFound(redirectToPage(DashboardLoc)(Redirect.Replace))
+    (staticRoute(root, HomeL) ~> renderR(ctl => Home(ctl))
+      | staticRoute("#/deverror/vis", DeverrorVisL) ~> renderR(ctl => DeverrorVis.component(ctl))
+      ).notFound(redirectToPage(HomeL)(Redirect.Replace))
   }.renderWith(layout)
 
   // base layout for all pages
@@ -39,7 +39,7 @@ object SPAMain extends js.JSApp {
       // here we use plain Bootstrap class names as these are specific to the top level layout defined here
       <.nav(^.className := "navbar navbar-inverse navbar-fixed-top")(
         <.div(^.className := "container")(
-          <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand")("SPA Tutorial")),
+          <.div(^.className := "navbar-header")(<.span(^.className := "navbar-brand") (c.link(HomeL)("Everymove Devtools"))),
           <.div(^.className := "collapse navbar-collapse")(
             MainMenu(MainMenu.Props(c, r.page, TodoStore.todos))
           )

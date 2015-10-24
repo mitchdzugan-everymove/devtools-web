@@ -1,7 +1,7 @@
 package spatutorial.client.modules
 
 import japgolly.scalajs.react.extra.router2.RouterCtl
-import spatutorial.client.SPAMain.{TodoLoc, DashboardLoc, Loc}
+import spatutorial.client.SPAMain._
 
 import scalacss.ScalaCssReact._
 import japgolly.scalajs.react._
@@ -45,8 +45,7 @@ object MainMenu {
   }
 
   private val menuItems = Seq(
-    MenuItem(1, _ => "Dashboard", Icon.dashboard, DashboardLoc),
-    MenuItem(2, buildTodoMenu, Icon.check, TodoLoc)
+    MenuItem(1, _ => "Deverror-Vis", Icon.lineChart, DeverrorVisL)
   )
 
   private val MainMenu = ReactComponentB[Props]("MainMenu")

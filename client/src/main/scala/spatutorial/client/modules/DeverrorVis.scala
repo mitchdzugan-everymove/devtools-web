@@ -3,10 +3,10 @@ package spatutorial.client.modules
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react.extra.router2.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import spatutorial.client.SPAMain.{TodoLoc, Loc}
+import spatutorial.client.SPAMain._
 import spatutorial.client.components._
 
-object Dashboard {
+object DeverrorVis {
   case class State(index : Option[Int] = None, prevIndex : Option[Int] = None)
 
   class Backend(t: BackendScope[RouterCtl[Loc], State]) {
@@ -27,7 +27,7 @@ object Dashboard {
   }
 
   // create the React component for Dashboard
-  val component = ReactComponentB[RouterCtl[Loc]]("Dashboard")
+  val component = ReactComponentB[RouterCtl[Loc]]("Deverror-Vis")
     .initialState(State())
     .backend(new Backend(_))
     .render((ctl, S, B) => {
@@ -74,12 +74,11 @@ object Dashboard {
       )
       <.div(
         // header, MessageOfTheDay and chart components
-        <.h2("Dashboard"),
+        <.h2("Deverror Visualization"),
         Motd(),
         Chart(cp),
         // create a link to the Todo view
-        <.h2(S.index),
-        <.div(ctl.link(TodoLoc)("Check your todos!"))
+        <.h2(S.index)
       )
     }).build
 }
