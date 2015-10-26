@@ -52,14 +52,23 @@ object Settings {
   val sharedDependencies = Def.setting(Seq(
     "com.lihaoyi" %%% "autowire" % versions.autowire,
     "me.chrons" %%% "boopickle" % versions.booPickle,
-    "com.lihaoyi" %%% "utest" % versions.uTest
+    "com.lihaoyi" %%% "utest" % versions.uTest,
+    "com.github.nscala-time" %% "nscala-time" % "2.4.0"
   ))
 
   /** Dependencies only used by the JVM project */
   val jvmDependencies = Def.setting(Seq(
     "com.vmunier" %% "play-scalajs-scripts" % versions.playScripts,
     "org.webjars" % "font-awesome" % "4.3.0-1" % Provided,
-    "org.webjars" % "bootstrap" % versions.bootstrap % Provided
+    "org.webjars" % "bootstrap" % versions.bootstrap % Provided,
+    "com.google.api-client" % "google-api-client" % "1.20.0",
+    "com.google.oauth-client" % "google-oauth-client-jetty" % "1.20.0",
+    "com.google.apis" % "google-api-services-gmail" % "v1-rev29-1.20.0",
+    "com.typesafe.play" % "play-slick_2.11" % "1.1.1",
+    "com.typesafe.play" % "play-slick-evolutions_2.11" % "1.1.1",
+    "com.h2database" % "h2" % "1.4.190",
+    "com.typesafe.play" % "play-jdbc-evolutions_2.11" % "2.4.3",
+    "org.postgresql"     %  "postgresql" % "9.3-1102-jdbc41"
   ))
 
   /** Dependencies only used by the JS project (note the use of %%% instead of %%) */

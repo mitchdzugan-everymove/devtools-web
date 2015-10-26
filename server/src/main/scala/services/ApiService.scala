@@ -2,9 +2,35 @@ package services
 
 import java.util.{UUID, Date}
 
-import spatutorial.shared._
+import slick.driver
+import spatutorial.shared.Api
+import spatutorial.shared.TodoItem
+import spatutorial.shared.{TodoLow, TodoNormal, TodoHigh}
 
-class ApiService extends Api {
+import slick.driver.JdbcProfile
+import play.api.db.slick.{HasDatabaseConfig, DatabaseConfigProvider}
+import play.api.Play
+
+import models._
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
+import scala.util.{Try, Success, Failure}
+
+
+class ApiService extends Api with DeverrorTable with HasDatabaseConfig[JdbcProfile] {
+  val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
+
+  import driver.api._
+
+  private val Deverrors = TableQuery[Deverrors]
+
+  Await.ready(db.run(Deverrors.schema.create), Duration.Inf).value.get match {
+    case Success(_) => println("LIVIN THO")
+    case Failure(e) => println(e)
+  }
+
   var todos = Seq(
     TodoItem("41424344-4546-4748-494a-4b4c4d4e4f50", 0x61626364, "Wear shirt that says “Life”. Hand out lemons on street corner.", TodoLow, false),
     TodoItem("2", 0x61626364, "Make vanilla pudding. Put in mayo jar. Eat in public.", TodoNormal, false),
@@ -12,7 +38,12 @@ class ApiService extends Api {
     TodoItem("4", 0x61626364, "Sneeze in front of the pope. Get blessed.", TodoNormal, true)
   )
 
-  override def motd(name: String): String = s"Welcome to SPA, $name! Time is now ${new Date}"
+  override def motd(name: String): String = {
+    Await.ready(db.run(Deverrors.result), Duration.Inf).value.get match {
+      case Success(t) => t.length.toString
+      case Failure(e) => e.toString
+    }
+  }
 
   override def getTodos(): Seq[TodoItem] = {
     // provide some fake Todos
